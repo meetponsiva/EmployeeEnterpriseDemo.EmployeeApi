@@ -11,5 +11,5 @@ public class EmployeeDetail
     public string Name { get; set; }
 
     [Required]
-    public int DepartmentId { get; set; }
+    public int DepartmentId { get; set; } = 1;
 }
