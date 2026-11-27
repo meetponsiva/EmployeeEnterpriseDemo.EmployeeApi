@@ -13,7 +13,10 @@ public class EmployeesController(AppDbContext db, IConfiguration config) : Contr
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var employees = await db.EmployeeDetails.OrderByDescending(e => e.Id).ToListAsync();
+        //var employees = await db.EmployeeDetails.OrderByDescending(e => e.Id).ToListAsync();
+        //var employees = await db.EmployeeDetails.FromSqlRaw("EXEC [dbo].[sp_GetAllEmployees]").OrderBy(e => e.Id).AsNoTracking().ToListAsync();
+        var employees = await db.EmployeeDetails.FromSqlInterpolated($"EXEC [dbo].[sp_GetAllEmployees]").AsNoTracking().ToListAsync();
+
         return Ok(new
         {
             Environment = config["ENVIRONMENT_NAME"] ?? "LOCAL",
